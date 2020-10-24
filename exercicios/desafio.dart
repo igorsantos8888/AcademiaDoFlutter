@@ -1,5 +1,5 @@
-void main(List<String> args) {
-  var pacientes = [
+void main() {
+  List<dynamic> pacientes = [
     'Rodrigo Rahman|35|desenvolvedor|SP',
     'Manoel Silva|12|estudante|MG',
     'Joaquim Rahman|18|estudante|SP',
@@ -10,15 +10,40 @@ void main(List<String> args) {
     'João Rahman|55|Jornalista|SP',
   ];
 
-  for (var nomes in pacientes) {
-    var nome = nomes.split('|');
-    //print(nome[0] +  nome[1] +  nome[2] +  nome[3]);
-    print(nome);
-    
+  final idade = 20;
+  int qtdIdade = 0;
 
+  for (var paciente in pacientes) {
+    var nomeSplit = paciente.split('|');
+    if (int.tryParse(nomeSplit[1]) != null &&
+        int.tryParse(nomeSplit[1]) > idade) qtdIdade++;
   }
+  print(qtdIdade);
 
-  // Baseado no array acima monte um relatório onde mostre
-  // Apresente a quantidade de pacientes com mais de 20 anos
-  // Agrupar os pacientes por familia(considerar o sobrenome) apresentar por familia.
+  List sobrenomesList = [];
+
+  for(var paciente in pacientes)
+  {
+      var pacienteSplit = paciente.split('|');
+      var sobrenomePaciente = pacienteSplit[0].split(' ').last;
+
+      if(!sobrenomesList.contains(sobrenomePaciente))
+      {
+        sobrenomesList.add(sobrenomePaciente);
+        print("- Família $sobrenomePaciente");
+
+        for(var paciente in pacientes)
+        {
+          var pacienteSplit = paciente.split('|');
+          if(sobrenomePaciente.toLowerCase() == pacienteSplit[0].split(' ').last.toLowerCase())
+          {
+            print("   ${pacienteSplit[0]}");
+          }
+        }
+
+      }
+  }
+// Baseado no array acima monte um relatório onde mostre
+// Apresente a quantidade de pacientes com mais de 20 anos [V]
+// Agrupar os pacientes por familia(considerar o sobrenome) apresentar por familia.
 }
